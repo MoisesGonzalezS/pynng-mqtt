@@ -78,7 +78,7 @@ def build_nng(cmake_args):
         '-DNNG_TOOLS=OFF',
         '-DNNG_ENABLE_QUIC=ON',
         '-DCMAKE_BUILD_TYPE=Release',
-        '-DMBEDTLS_ROOT_DIR={}/mbedtls/prefix/'.format(THIS_DIR),
+        '-DMBEDTLS_ROOT={}/mbedtls/prefix/'.format(THIS_DIR),
         '..',
     ]
     print('building mbedtls with:', cmake_cmd)
