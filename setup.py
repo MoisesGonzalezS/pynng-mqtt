@@ -41,6 +41,8 @@ def build_mbedtls(cmake_args):
         # do('cp -r ../mbedtls mbedtls', shell=True)
         do('git checkout {}'.format(MBEDTLS_REV), shell=True, cwd='mbedtls')
     cwd = 'mbedtls/build'
+    if os.path.exists(cwd):
+        _rmdir(cwd)
     os.mkdir(cwd)
     cmake_cmd = ['cmake'] + cmake_args
     cmake_cmd += [
@@ -70,7 +72,10 @@ def build_nng(cmake_args):
         # for local hacking, just copy a directory (network connection is slow)
         # do('cp -r ../nng-clean nng', shell=True)
         do('git checkout {}'.format(NNG_REV), shell=True, cwd='nng')
-    os.mkdir('nng/build')
+    cwd = 'nng/build'
+    if os.path.exists(cwd):
+        _rmdir(cwd)
+    os.mkdir(cwd)
     cmake_cmd = ['cmake'] + cmake_args
     cmake_cmd += [
         '-DNNG_ENABLE_TLS=ON',
@@ -82,11 +87,11 @@ def build_nng(cmake_args):
         '..',
     ]
     print('building mbedtls with:', cmake_cmd)
-    do(cmake_cmd, cwd='nng/build')
+    do(cmake_cmd, cwd=cwd)
     do(
         'cmake --build . --config Release',
         shell=True,
-        cwd='nng/build',
+        cwd=cwd,
     )
 
 
